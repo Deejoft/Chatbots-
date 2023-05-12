@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript Chatbot</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			text-align: center;
+			margin-top: 50px;
+		}
+		input[type="text"] {
+			padding: 10px;
+			font-size: 24px;
+			width: 400px;
+			border-radius: 5px;
+			border: none;
+			box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+			margin-bottom: 10px;
+		}
+		input[type="button"] {
+			padding: 10px;
+			font-size: 24px;
+			width: 100px;
+			border-radius: 5px;
+			border: none;
+			background-color: #f0f0f0;
+			box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+			margin-right: 5px;
+			margin-bottom: 10px;
+		}
+		input[type="button"]:hover {
+			background-color: #e0e0e0;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<h1>JavaScript Chatbot</h1>
+	<div id="chatbox"></div>
+	<input type="text" id="input" placeholder="Type your message here"><br>
+	<input type="button" value="Send" onclick="sendMessage()"/>
+	<input type="button" value="Clear" onclick="clearChat()"/><br>
+
+	<script>
+		// Define the chatbot's responses to different messages
+		const responses = {
+			"hi": "Hello there!",
+			"how are you": "I'm doing well, thank you.",
+			"what's your name": "My name is Chatbot.",
+			"what do you do": "I'm here to answer your questions.",
+			"default": "I'm sorry, I don't understand. Can you try again?"
+		};
+
+		// Display a message in the chatbox
+		function displayMessage(message, sender) {
+			const chatbox = document.getElementById("chatbox");
+			const messageDiv = document.createElement("div");
+			messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+			chatbox.appendChild(messageDiv);
+			chatbox.scrollTop = chatbox.scrollHeight;
+		}
+
+		// Send a message to the chatbot and display the response
+		function sendMessage() {
+			const input = document.getElementById("input");
+			const message = input.value.trim().toLowerCase();
+			input.value = "";
+			if (message.length > 0) {
+				displayMessage(message, "You");
+				const response = responses[message] || responses["default"];
+				displayMessage(response, "Chatbot");
+			}
+		}
+
+		// Clear the chatbox
+		function clearChat() {
+			const chatbox = document.getElementById("chatbox");
+			chatbox.innerHTML = "";
+		}
+
+		// Handle Enter key press
+		document.addEventListener("keydown", function(event) {
+			if (event.key === "Enter") {
+				sendMessage();
+			}
+		});
+	</script>
+</body>
+</html>
